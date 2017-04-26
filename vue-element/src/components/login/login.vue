@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrap">
-    <div class="login-title">后台管理系统</div>
+    <div class="login-title">管理系统</div>
     <div class="login">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
           <el-form-item prop="username">
