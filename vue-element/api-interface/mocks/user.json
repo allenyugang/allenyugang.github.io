@@ -1,0 +1,24 @@
+/**
+*测试接口
+*
+*@url /user
+*
+*详细说明
+*
+*uid:userID
+*name:username
+*email:邮件
+*/
+
+{
+  "code":0,
+  "total": 100,
+  "result|100":[{
+    "uid|+1":1,
+    "name":"@name",
+    "sex": "@integer(0, 1)",
+    "age|1-30":1,
+    "brith": "@date",
+    "address": "@county(true)"
+  }]
+}
