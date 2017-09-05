@@ -64,6 +64,7 @@ export default {
   data () {
     return {
       users: [],
+      resultData: [],
       listLoading: false,
       total: 0,
       currentPage1: 1,
@@ -117,7 +118,12 @@ export default {
     },
     handleCurrentChange (val) {
       this.currentPage = val
-      console.log(`当前页: ${val}`)
+      this.users = []
+      for (var i = (this.currentPage - 1) * 10; i < (this.currentPage - 1) * 10 + 10; i++) {
+        if (i < this.resultData.length) {
+          this.users.push(this.resultData[i])
+        }
+      }
     },
     editSubmit: function () {
       this.$refs.editForm.validate((valid) => {
@@ -133,10 +139,17 @@ export default {
   },
   created () {
     this.$http.get('./api/user').then((response) => {
-      this.users = response.data.result
+      this.resultData = response.data.result
+      console.log(this.resultData)
       this.total = response.data.total
+      for (var i = 0; i < this.resultData.length; i++) {
+        if (i < 10) {
+          this.users.push(this.resultData[i])
+          console.log(this.users)
+        }
+      }
       console.log(response.data.result.length)
-      this.users.forEach((item) => {
+      this.resultData.forEach((item) => {
         if (item.sex === 1) {
           item.sex = '男'
         } else {

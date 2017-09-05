@@ -1,14 +1,19 @@
 <template>
-  <div class="col-md-6 pic_show">
-    <div class="register_div">
-      <div class="upfilebox">
-          <input class="form-control bussinessLicense" @change="readFile($event)" type="file" id="bussinessLicense" name="bussinessLicense">
-          <label class="lable lable-pic"></label>
-      </div>
-      <div ref="registerShow" v-html = "datas" @click="show_img_modal">
+  <section>
+    <div class="col-md-6 pic_show">
+      <div class="register_div">
+        <div class="upfilebox">
+            <input class="form-control bussinessLicense" @change="readFile($event)" type="file" id="bussinessLicense" name="bussinessLicense">
+            <label class="lable lable-pic"></label>
+        </div>
+        <div class="registerShow" v-html = "datas" @click="open">
+        </div>
       </div>
     </div>
-  </div>
+    <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
+      <img :src="dataurl" width="100" height="100">
+    </el-dialog>
+  </section>
 </template>
 <script>
 export default {
@@ -20,7 +25,9 @@ export default {
       fileExt: '',
       fileExp: '',
       reader: '',
-      datas: ''
+      datas: '',
+      dataurl: '',
+      editFormVisible: false
     }
   },
   methods: {
@@ -42,29 +49,21 @@ export default {
         let _this = this
         window.sessionStorage['result'] = _this.result
       }
+      if (window.sessionStorage['result'] === undefined) {
+        setTimeout(function () {
+          let url = window.sessionStorage['result']
+          console.log(this.datas)
+          console.log(url)
+        }, 3000)
+      } else {
+        alert(333)
+      }
       let url = window.sessionStorage['result']
       this.datas = '<img class="img" data-name=' + this.fileName + ' src="' + url + '" alt="" width="102" height="102"/>'
     },
-    show_img_modal () {
-      var html = ''
-      let cur = window.sessionStorage['result']
-      html += '<div class="modal fade" id="repay-pic" ref="repay_pic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
-      html += '<div class="modal-dialog">'
-      html += '<div class="modal-content">'
-      html += '<div class="modal-header">'
-      html += '<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>'
-      html += '<h4 class="modal-title" id="myModalLabel">图片预览</h4>'
-      html += '</div>'
-      html += '<div class="modal-body center">'
-      html += '<img src="' + cur + '" width="300px" height="auto">'
-      html += '<p class="center">点击下载图片：<a href="' + cur + '" download="' + this.fileName + '">' + this.fileName + '</a></p>'
-      html += '</div>'
-      html += '<div class="modal-footer">'
-      html += '<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>'
-      html += '</div>'
-      html += '</div>'
-      html += '</div>'
-      html += '</div>'
+    open () {
+      this.editFormVisible = true
+      this.dataurl = window.sessionStorage['result']
     }
   }
 }

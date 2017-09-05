@@ -12,8 +12,8 @@
 
 {
   "code":0,
-  "total": 100,
-  "result|100":[{
+  "total": 200,
+  "result|200":[{
     "uid|+1":1,
     "name":"@name",
     "sex": "@integer(0, 1)",
